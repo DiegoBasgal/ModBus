@@ -14,9 +14,9 @@ class mbClient():
 
         try:
             while True:
+                # Input option cases
                 sel = input(f"\nSelect wich operation to execute:\n1 - Read \n2 - Write \n3 - Config \n4 - Exit\n\nOp: ")
                 
-                # Input option cases
                 # Case 1 -> read operations
                 if sel == "1":
                     print("\n---------------------------------")
