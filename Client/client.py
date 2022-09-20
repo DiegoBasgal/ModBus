@@ -1,28 +1,23 @@
-from pyModbusTCP.client import ModbusClient
-from MBServer import MBServer
 from time import sleep
+from pyModbusTCP.client import ModbusClient
 
-sConnected = MBServer.connected
-
-class MBClient():
-
+class mbClient():
+   
     def __init__(self, server_ip, port, scan_time=1):
         # Constructor
-        self._client = ModbusClient(host=server_ip, port=port)
         self._scan_time = scan_time
-    
-    def connection(self):    
+        self._client = ModbusClient(host=server_ip,port = port)
+
+    def run(self):
         # Method used for client connection
         self._client.open()
-    
+
         try:
-            while sConnected == True:
-                print("\n---------------------------------")
-                sel = input(f"\nSelect wich operation to execute:\n1 - Read \n2 - Write \n3 - Config \n4 - Exit\n\nOperation: ")
-                    
+            while True:
+                sel = input(f"\nSelect wich operation to execute:\n1 - Read \n2 - Write \n3 - Config \n4 - Exit\n\nOp: ")
+                
                 # Input option cases
                 # Case 1 -> read operations
-                    
                 if sel == "1":
                     print("\n---------------------------------")
                     operation = input(f"\nSelect wich register to read:\n1 - Holding Register \n2 - Coil \n3 - Input Register \n4 - Discrete Input\n\nOperation: ")
@@ -37,8 +32,8 @@ class MBClient():
                             sleep(self._scan_time)
                     else:
                         ("Invalid operation")
-                    
-                 # Case 2 -> write operations
+
+                # Case 2 -> write operations
                 elif sel == "2":
                     print("\n---------------------------------")
                     operation = input(f"\nSelect wich register to write:\n1 - Holding Register \n2 - Coil\n\n Operation: ")
@@ -58,12 +53,11 @@ class MBClient():
                     print("\n---------------------------------")
                     print("\nDisconnecting...")
                     self._client.close()
-                    connection = False
                 else:
-                    print("Invalid operation")    
+                    print("Invalid operation") 
 
         except Exception as e:
-            print("Error: ", e.args)
+            print('Error: ',e.args)
 
     def readData(self, operation, addr):
         # Method used for reading data from modbus table
